@@ -23,17 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Common\" />
-    <Folder Include="Features\Categories\Create\" />
-    <Folder Include="Features\Categories\GetAll\" />
-    <Folder Include="Features\Categories\Update\" />
-    <Folder Include="Features\Categories\Delete\" />
-    <Folder Include="Features\Reports\Summary\" />
-    <Folder Include="Features\Reports\ByCategory\" />
-    <Folder Include="Features\Transactions\Create\" />
-    <Folder Include="Features\Transactions\GetAll\" />
-    <Folder Include="Features\Transactions\GetById\" />
-    <Folder Include="Features\Transactions\Update\" />
-    <Folder Include="Features\Transactions\Delete\" />
   </ItemGroup>
 
 </Project>
