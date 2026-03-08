@@ -1,6 +1,8 @@
 ﻿namespace CostAccounting.API.Domain
 {
-    public class CategoryType
+    public enum CategoryType
     {
+        Expense = 1,
+        Income = 2
     }
 }
