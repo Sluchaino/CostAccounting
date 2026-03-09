@@ -1,8 +1,10 @@
 import axios from 'axios';
 
 const api = axios.create({
-  // Меняем 5000 на 5288
-  baseURL: 'http://localhost:5288/api', 
+  baseURL: 'http://localhost:5288/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 export const CategoryService = {
@@ -14,11 +16,11 @@ export const CategoryService = {
 };
 
 export const TransactionService = {
-  getAll: () => api.get('/transactions'),
+  getAll: (params) => api.get('/transactions', { params }),
   getById: (id) => api.get(`/transactions/${id}`),
   create: (data) => api.post('/transactions', data),
   update: (id, data) => api.put(`/transactions/${id}`, data),
   delete: (id) => api.delete(`/transactions/${id}`),
-  getSummary: () => api.get('/reports/summary'),
-  getByCategory: () => api.get('/reports/by-category'),
+  getSummary: (params) => api.get('/reports/summary', { params }),
+  getByCategory: (params) => api.get('/reports/by-category', { params }),
 };
