@@ -99,11 +99,11 @@ app.Run();
 
 static string BuildConnectionString(IConfiguration configuration)
 {
-    var host = configuration["DB_HOST"] ?? "localhost";
-    var port = configuration["DB_PORT"] ?? "5432";
-    var database = configuration["DB_NAME"] ?? "CostAccounting";
-    var username = configuration["DB_USER"] ?? "postgres";
-    var password = configuration["DB_PASSWORD"] ?? "777buba777";
+    var host = configuration["DB_HOST"];
+    var port = configuration["DB_PORT"];
+    var database = configuration["DB_NAME"];
+    var username = configuration["DB_USER"];
+    var password = configuration["DB_PASSWORD"];
 
     return $"Host={host};Port={port};Database={database};Username={username};Password={password}";
 }
