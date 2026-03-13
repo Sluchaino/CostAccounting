@@ -39,11 +39,11 @@ jobs:
             -d '{"name":"Test Category", "type":"Expense"}')
           http_code=${response: -3}
           body=${response%???}
-          if [ "$http_code" -ne 200 ]; then
+          if [ "$http_code" -ne 200 ] && [ "$http_code" -ne 201 ]; then
             echo "❌ Failed to create category. HTTP code: $http_code"
             exit 1
           fi
-          echo "✅ Category created successfully"
+          echo "✅ Category created successfully (HTTP $http_code)"
 
       - name: Stop services
         if: always()
