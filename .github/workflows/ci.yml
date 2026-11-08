@@ -1,51 +1,19 @@
-name: CI Pipeline
-
-
-on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-
+name: Android
+on: [push, pull_request]
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Create .env file
-        run: |
-          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-          echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
-
-      - name: Start services with Docker Compose
-        run: |
-          docker compose up -d db backend
-          timeout 60s sh -c 'until curl -f http://localhost:5000/health; do sleep 5; done'
-
-      - name: Health check test
-        run: |
-          curl -f http://localhost:5000/health || exit 1
-
-      - name: API test - Create category
-        run: |
-          response=$(curl -s -w "%{http_code}" -X POST http://localhost:5000/api/categories \
-            -H "Content-Type: application/json" \
-            -d '{"name":"Test Category", "type":"Expense"}')
-          http_code=${response: -3}
-          body=${response%???}
-          if [ "$http_code" -ne 200 ] && [ "$http_code" -ne 201 ]; then
-            echo "❌ Failed to create category. HTTP code: $http_code"
-            exit 1
-          fi
-          echo "✅ Category created successfully (HTTP $http_code)"
-
-      - name: Stop services
-        if: always()
-        run: docker compose down
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+      - run: sh build.sh
+      - run: python3 scripts/test_migration.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CashFlow-Android-APK
+          path: dist/CostAccounting-Android.apk

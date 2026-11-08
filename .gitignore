@@ -402,3 +402,22 @@ FodyWeavers.xsd
 
 .env
 .env.production
+
+# Kotlin build, local data and portable distribution
+/target/
+/.tools/
+/data/
+/dist/
+/Frontend/dist/
+*.mv.db
+*.trace.db
+.idea/
+*.iml
+
+# Android
+.gradle/
+.kotlin/
+local.properties
+**/build/
+*.jks
+*.keystore
